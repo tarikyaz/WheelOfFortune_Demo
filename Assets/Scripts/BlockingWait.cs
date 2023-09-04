@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,16 +12,35 @@ public class BlockingWait : MonoBehaviour
     [SerializeField]
     GameObject finishedPopup;
 
+    [SerializeField] float adsDuration = 2;
+    Tween sliderAnimTween;
+    bool adsIsRewarded => sliderRef.value == 1;
     private void OnEnable()
     {
-        finishedPopup.SetActive(true);
+        RestAnimatin();
         Debug.Log("BlockingWait:OnEnable");
+        sliderAnimTween = sliderRef.DOValue(1, adsDuration).From(0).OnComplete(()=> {
+            sliderRef.value = 1;
+            finishedPopup.gameObject.SetActive(true);
+        });
     }
 
     public void CloseBlockingScreen()
     {
+        if (adsIsRewarded)
+        {
+            BaseEvents.CallRewardCoin(1);
+        }
+        RestAnimatin();
         finishedPopup.SetActive(false);
         gameObject.SetActive(false);
         Debug.Log("BlockingWait:CloseBlockingScreen");
+    }
+    void RestAnimatin()
+    {
+        sliderAnimTween.Pause();
+        sliderAnimTween.Kill();
+        sliderRef.value = 0;
+        finishedPopup.gameObject.SetActive(false);
     }
 }
