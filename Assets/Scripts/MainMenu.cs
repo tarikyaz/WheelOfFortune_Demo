@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,9 @@ public class MainMenu : MonoBehaviour
     BlockingWait blockingWaitPopup;
     public Button GetExtraCoins_Button;
     public Button GetDailyBonus_Button;
+    
+    public TMP_Text GetExtraCoins_Text;
+    public TMP_Text GetDailyBonus_Text;
 
     // Play Wheel of Fortune
     public void Action_SpendOneCoin()

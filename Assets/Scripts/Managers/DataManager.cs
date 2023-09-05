@@ -66,13 +66,10 @@ public class DataManager : MonoBehaviour
 
 
 
-    public bool TryGetAds(bool onlyCheck = false)
+    public bool TryGetAds(bool onlyCheck  , out TimeSpan timeRemaining)
     {
-        Debug.Log("TryGetAds " + PlayerPrefs.GetString(DATES_DATA_KEY_Str));
         DateTime currentTime = TimerUtility.CurrentTime;
-        Debug.Log("currentTime " + currentTime);
         DateTime restTime = TimerUtility.GetRestTime(DateTime.FromBinary(adsData.FirstClickedAdsTime_Binary));
-        Debug.Log("restTime " + restTime);
 
         if (restTime <= currentTime)
         {
@@ -80,6 +77,7 @@ public class DataManager : MonoBehaviour
             {
                 adsData.RestAdsClicks();
             }
+            timeRemaining = new TimeSpan(0);
             return true;
         }
         else
@@ -90,36 +88,45 @@ public class DataManager : MonoBehaviour
                 {
                     adsData.AddAdsClick();
                 }
+                timeRemaining = new TimeSpan(0);
                 return true;
             }
             else
             {
+                timeRemaining = restTime - currentTime;
                 return false;
             }
 
         }
     }
-
-    public bool TryGetDailyBonus(bool onlyCheck = false)
+    public bool TryGetAds(bool onlyCheck = false)
     {
-        Debug.Log("TryGetDailyBonus " + PlayerPrefs.GetString(DATES_DATA_KEY_Str));
-        DateTime currentTime = TimerUtility.CurrentTime;
-        Debug.Log("currentTime " + currentTime);
-        DateTime claimTime = DateTime.FromBinary(adsData.DailyBonusClaimDate_Binary);
-        Debug.Log("restTime " + claimTime);
+        return TryGetAds(onlyCheck, out var timeRemaining);
+    }
 
+
+    public bool TryGetDailyBonus(bool onlyCheck , out TimeSpan timeRemaining)
+    {
+        DateTime currentTime = TimerUtility.CurrentTime;
+        DateTime claimTime = DateTime.FromBinary(adsData.DailyBonusClaimDate_Binary);
         if (claimTime <= currentTime)
         {
             if (!onlyCheck)
             {
                 adsData.RestDailyBonus();
             }
+            timeRemaining = new TimeSpan(0);
             return true;
         }
         else
         {
+            timeRemaining = claimTime - currentTime;
             return false;
         }
+    }
+    public bool TryGetDailyBonus(bool onlyCheck = false)
+    {
+        return TryGetDailyBonus(onlyCheck, out var timeRemaining);
     }
     private void OnEnable()
     {

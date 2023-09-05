@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -27,13 +28,31 @@ public class GameManager : Singleton<GameManager>
         {
             BaseEvents.CallRewardCoin(1);
         }
-        MainMenu.GetDailyBonus_Button.interactable = DataManager.TryGetDailyBonus(true);
     }
 
-    private void Start()
+
+    private void FixedUpdate()
     {
-        MainMenu.GetExtraCoins_Button.interactable = DataManager.TryGetAds(true);
-        MainMenu.GetDailyBonus_Button.interactable = DataManager.TryGetDailyBonus(true);
+        MainMenu.GetExtraCoins_Button.interactable = DataManager.TryGetAds(true , out var timeRemaingForExtraCoins);
+        MainMenu.GetDailyBonus_Button.interactable = DataManager.TryGetDailyBonus(true, out var timeRemaingForDailyBonus);
+
+        if (MainMenu.GetExtraCoins_Button.interactable)
+        {
+            MainMenu.GetExtraCoins_Text.text = "Get extra coin";
+        }
+        else
+        {
+            MainMenu.GetExtraCoins_Text.text = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaingForExtraCoins.Hours, timeRemaingForExtraCoins.Minutes, timeRemaingForExtraCoins.Seconds);
+        }
+
+        if (MainMenu.GetDailyBonus_Button.interactable)
+        {
+            MainMenu.GetDailyBonus_Text.text = "Claim free coin";
+        }
+        else
+        {
+            MainMenu.GetDailyBonus_Text.text = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaingForDailyBonus.Hours, timeRemaingForDailyBonus.Minutes, timeRemaingForDailyBonus.Seconds);
+        }
     }
     private void OnGetExtraCoinsHandler()
     {

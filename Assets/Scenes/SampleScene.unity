@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 204157265}
   - component: {fileID: 204157264}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: FreeCoin_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,6 +695,8 @@ MonoBehaviour:
   blockingWaitPopup: {fileID: 862821849}
   GetExtraCoins_Button: {fileID: 1439004239}
   GetDailyBonus_Button: {fileID: 1656855331}
+  GetExtraCoins_Text: {fileID: 1964048184}
+  GetDailyBonus_Text: {fileID: 204157264}
 --- !u!224 &862821846 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3974171538541356753, guid: 5e6b4704a5c0d4875856edc3036e365e, type: 3}
@@ -1189,7 +1191,7 @@ GameObject:
   - component: {fileID: 1964048185}
   - component: {fileID: 1964048184}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ExtraCoin_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
