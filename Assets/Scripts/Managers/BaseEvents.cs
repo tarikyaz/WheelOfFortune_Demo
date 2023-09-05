@@ -1,12 +1,17 @@
 using System;
 
-
 public static class BaseEvents
 {
     internal static Action OnClaimFreeCoin;
     internal static Action OnGetExtraCoin;
     internal static Action OnSpendOneCoin;
-    internal static Action<int> OnRewardCoin;
+    internal static Action<int> OnAdsRewardCoin;
+    internal static Action<int> OnCoinsAmountUpdate;
+
+    internal static void CallCoinsAmountUpdate(int newValue)
+    {
+        OnCoinsAmountUpdate?.Invoke(newValue);
+    }
 
     internal static void CallOnClaimFreeCoin()
     {
@@ -15,7 +20,7 @@ public static class BaseEvents
 
     internal static void CallOnGetExtraCoin()
     {
-        OnGetExtraCoin.Invoke();
+        OnGetExtraCoin?.Invoke();
     }
 
     internal static void CallOnSpendOneCoin()
@@ -25,6 +30,6 @@ public static class BaseEvents
 
     internal static void CallRewardCoin(int amount)
     {
-        OnRewardCoin?.Invoke(amount);
+        OnAdsRewardCoin?.Invoke(amount);
     }
 }

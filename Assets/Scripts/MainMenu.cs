@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField]
     BlockingWait blockingWaitPopup;
+    public Button GetExtraCoins_Button;
 
     // Play Wheel of Fortune
     public void Action_SpendOneCoin()
@@ -19,7 +20,6 @@ public class MainMenu : MonoBehaviour
     public void Action_GetExtraCoin()
     {
         Debug.Log("MainMenu:Action_GetExtraCoin");
-        blockingWaitPopup.gameObject.SetActive(true);
         BaseEvents.CallOnGetExtraCoin();
 
     }
@@ -29,5 +29,9 @@ public class MainMenu : MonoBehaviour
         Debug.Log("MainMenu:Action_ClaimFreeCoin");
         BaseEvents.CallOnClaimFreeCoin();
 
+    }
+    public void ShowAds()
+    {
+        blockingWaitPopup.gameObject.SetActive(true);
     }
 }

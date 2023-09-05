@@ -12,6 +12,10 @@ public static class TimerUtility
         }
     }
 
+    public static DateTime GetRestTime(DateTime dateTime) => new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 13, 0, 0, 0).AddDays(1);
+
+
+
     public static DateTime ConvertTimestampToDateTime(double timestamp)
     {
         return firstDt.AddSeconds(timestamp);
