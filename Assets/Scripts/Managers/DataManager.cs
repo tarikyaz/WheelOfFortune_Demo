@@ -9,8 +9,8 @@ public class DataManager : MonoBehaviour
     public struct DatesDataStruc
     {
         public int NumOfClicks;
-        public long FirstClickedAdsTime_Binary;
-        public long DailyBonusClaimDate_Binary;
+        public double FirstClickedAdsTime_Timestamp;
+        public double DailyBonusClaimDate_Timestamp;
         public void AddAdsClick()
         {
             Debug.Log("Add Ads Click");
@@ -20,7 +20,7 @@ public class DataManager : MonoBehaviour
         public void RestAdsClicks()
         {
             Debug.Log("Rest Ads Clicks");
-            FirstClickedAdsTime_Binary = TimerUtility.CurrentTime.ToBinary();
+            FirstClickedAdsTime_Timestamp = TimerUtility.ConvertDateTimeToTimestamp(TimerUtility.CurrentTime);
             NumOfClicks = 0;
             PlayerPrefs.SetString(DATES_DATA_KEY_Str, JsonUtility.ToJson(this));
         }
@@ -28,7 +28,7 @@ public class DataManager : MonoBehaviour
         {
             Debug.Log("Rest Daily Bonus");
 
-            DailyBonusClaimDate_Binary = TimerUtility.GetRestTime(TimerUtility.CurrentTime).ToBinary();
+            DailyBonusClaimDate_Timestamp = TimerUtility.ConvertDateTimeToTimestamp(TimerUtility.GetRestTime(TimerUtility.CurrentTime));
             PlayerPrefs.SetString(DATES_DATA_KEY_Str, JsonUtility.ToJson(this));
 
         }
@@ -37,11 +37,11 @@ public class DataManager : MonoBehaviour
         {
             get
             {
-                long currentTime = TimerUtility.CurrentTime.ToBinary();
+                double currentTime = TimerUtility.ConvertDateTimeToTimestamp(TimerUtility.CurrentTime);
                 var data = new DatesDataStruc
                 {
-                    DailyBonusClaimDate_Binary = 0,
-                    FirstClickedAdsTime_Binary = currentTime,
+                    DailyBonusClaimDate_Timestamp = 0,
+                    FirstClickedAdsTime_Timestamp = currentTime,
                     NumOfClicks = 0
                 };
                 return JsonUtility.ToJson(data);
@@ -70,7 +70,7 @@ public class DataManager : MonoBehaviour
     public bool TryGetAds(bool onlyCheck  , out TimeSpan timeRemaining)
     {
         DateTime currentTime = TimerUtility.CurrentTime;
-        DateTime restTime = TimerUtility.GetRestTime(DateTime.FromBinary(adsData.FirstClickedAdsTime_Binary));
+        DateTime restTime = TimerUtility.GetRestTime(TimerUtility.ConvertTimestampToDateTime(adsData.FirstClickedAdsTime_Timestamp));
 
         if (restTime <= currentTime)
         {
@@ -109,7 +109,7 @@ public class DataManager : MonoBehaviour
     public bool TryGetDailyBonus(bool onlyCheck , out TimeSpan timeRemaining)
     {
         DateTime currentTime = TimerUtility.CurrentTime;
-        DateTime claimTime = DateTime.FromBinary(adsData.DailyBonusClaimDate_Binary);
+        DateTime claimTime = TimerUtility.ConvertTimestampToDateTime(adsData.DailyBonusClaimDate_Timestamp);
         if (claimTime <= currentTime)
         {
             if (!onlyCheck)
