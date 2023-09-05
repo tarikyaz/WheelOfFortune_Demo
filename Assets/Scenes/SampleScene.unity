@@ -300,9 +300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce674fd5ba3789a4d9d1f235c4ecf855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adsData:
-    NumOfClicks: 0
-    dayFirstAdsClickTime_Binary: 0
   maxNumOfAdsPerDay: 5
 --- !u!1 &358860300
 GameObject:
@@ -697,6 +694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockingWaitPopup: {fileID: 862821849}
   GetExtraCoins_Button: {fileID: 1439004239}
+  GetDailyBonus_Button: {fileID: 1656855331}
 --- !u!224 &862821846 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3974171538541356753, guid: 5e6b4704a5c0d4875856edc3036e365e, type: 3}

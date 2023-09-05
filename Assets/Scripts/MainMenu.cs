@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     BlockingWait blockingWaitPopup;
     public Button GetExtraCoins_Button;
+    public Button GetDailyBonus_Button;
 
     // Play Wheel of Fortune
     public void Action_SpendOneCoin()

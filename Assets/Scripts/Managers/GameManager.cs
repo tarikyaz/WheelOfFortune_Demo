@@ -12,15 +12,28 @@ public class GameManager : Singleton<GameManager>
     private void OnEnable()
     {
         BaseEvents.OnGetExtraCoin += OnGetExtraCoinsHandler;
+        BaseEvents.OnClaimFreeCoin += OnClaimFreeCoinHandler;
     }
     private void OnDisable()
     {
         BaseEvents.OnGetExtraCoin -= OnGetExtraCoinsHandler;
+        BaseEvents.OnClaimFreeCoin -= OnClaimFreeCoinHandler;
+
     }
+
+    private void OnClaimFreeCoinHandler()
+    {
+        if (DataManager.TryGetDailyBonus())
+        {
+            BaseEvents.CallRewardCoin(1);
+        }
+        MainMenu.GetDailyBonus_Button.interactable = DataManager.TryGetDailyBonus(true);
+    }
+
     private void Start()
     {
         MainMenu.GetExtraCoins_Button.interactable = DataManager.TryGetAds(true);
-
+        MainMenu.GetDailyBonus_Button.interactable = DataManager.TryGetDailyBonus(true);
     }
     private void OnGetExtraCoinsHandler()
     {
