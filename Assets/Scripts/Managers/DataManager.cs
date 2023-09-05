@@ -55,6 +55,7 @@ public class DataManager : MonoBehaviour
         get => PlayerPrefs.GetInt(NUMBER_OF_COINS_KEY_Str, 0);
         private set
         {
+            value = Mathf.Clamp(value, 0, GameManager.Instance.MaxCoinsAmount);
             PlayerPrefs.SetInt(NUMBER_OF_COINS_KEY_Str, value);
             BaseEvents.CallCoinsAmountUpdate(value);
         }
@@ -136,7 +137,10 @@ public class DataManager : MonoBehaviour
     {
         BaseEvents.OnAdsRewardCoin -= OnAdsRewardCoinsHandler;
     }
-
+    private void Start()
+    {
+        BaseEvents.CallCoinsAmountUpdate(NumOfCoins);
+    }
     private void OnAdsRewardCoinsHandler(int toAdd)
     {
         NumOfCoins += toAdd;

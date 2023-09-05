@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager>
 
     public DataManager DataManager;
     public MainMenu MainMenu;
+    public int MaxCoinsAmount = 10;
     private void OnEnable()
     {
         BaseEvents.OnGetExtraCoin += OnGetExtraCoinsHandler;
@@ -33,6 +34,12 @@ public class GameManager : Singleton<GameManager>
 
     private void FixedUpdate()
     {
+        if (MaxCoinsAmount == DataManager.NumOfCoins)
+        {
+            MainMenu.GetExtraCoins_Button.interactable = false;
+            MainMenu.GetDailyBonus_Button.interactable = false;
+            return;
+        }
         MainMenu.GetExtraCoins_Button.interactable = DataManager.TryGetAds(true , out var timeRemaingForExtraCoins);
         MainMenu.GetDailyBonus_Button.interactable = DataManager.TryGetDailyBonus(true, out var timeRemaingForDailyBonus);
 
