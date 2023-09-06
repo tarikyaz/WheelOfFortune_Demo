@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 50.1
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.05
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.25
+  m_fontSize: 65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -627,7 +627,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.5
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1490,7 +1490,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00464a9ef8aff948be5c92c00d5c31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonsArray: []
+  buttonsArray:
+  - {fileID: 1187614946536388601}
+  - {fileID: 1187614946200606498}
+  - {fileID: 1187614946529380949}
+  - {fileID: 1187614944880588085}
+  - {fileID: 1187614945482132089}
+  - {fileID: 1187614945571996273}
+  - {fileID: 1187614944836678841}
+  - {fileID: 1187614944825837764}
   bet_Input: {fileID: 1187614945552360532}
   pickerWheel: {fileID: 1291700483891811750}
 --- !u!1 &1187614945426465498
