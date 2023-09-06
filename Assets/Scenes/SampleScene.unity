@@ -300,7 +300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce674fd5ba3789a4d9d1f235c4ecf855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxNumOfAdsPerDay: 5
 --- !u!1 &358860300
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,10 +392,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 478446363}
+  - {fileID: 2095654901}
   - {fileID: 552959921}
   - {fileID: 828162043}
   - {fileID: 862821846}
-  - {fileID: 2095654901}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -502,7 +501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224511889338460380, guid: 160be82451391f6448834ec65286e007, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224511889338460380, guid: 160be82451391f6448834ec65286e007, type: 3}
       propertyPath: m_AnchorMax.x
@@ -769,7 +768,7 @@ RectTransform:
   - {fileID: 1439004238}
   - {fileID: 1656855330}
   m_Father: {fileID: 358860304}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -954,7 +953,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DataManager: {fileID: 260456001}
   MainMenu: {fileID: 828162045}
+  WheelPiece: {fileID: 552959922}
   MaxCoinsAmount: 10
+  MaxNumOfAdsPerDay: 5
+  StartingCoinsAmount: 5
 --- !u!4 &1114496347
 Transform:
   m_ObjectHideFlags: 0
@@ -1467,7 +1469,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 358860304}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -1851,7 +1853,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3974171538541356753, guid: 5e6b4704a5c0d4875856edc3036e365e, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3974171538541356753, guid: 5e6b4704a5c0d4875856edc3036e365e, type: 3}
       propertyPath: m_AnchorMax.x

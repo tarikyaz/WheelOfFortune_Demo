@@ -52,10 +52,9 @@ public class DataManager : MonoBehaviour
     const string NUMBER_OF_COINS_KEY_Str = "NUMBEROFCOINS";
     public int NumOfCoins
     {
-        get => PlayerPrefs.GetInt(NUMBER_OF_COINS_KEY_Str, startingCoinsAmount);
+        get => PlayerPrefs.GetInt(NUMBER_OF_COINS_KEY_Str,GameManager.Instance.StartingCoinsAmount);
         private set
         {
-            value = Mathf.Clamp(value, 0, GameManager.Instance.MaxCoinsAmount);
             PlayerPrefs.SetInt(NUMBER_OF_COINS_KEY_Str, value);
             BaseEvents.CallCoinsAmountUpdate(value);
         }
@@ -63,8 +62,7 @@ public class DataManager : MonoBehaviour
 
 
     DatesDataStruc adsData => JsonUtility.FromJson<DatesDataStruc>(PlayerPrefs.GetString(DATES_DATA_KEY_Str, DatesDataStruc.DefaultValueStr));
-    [SerializeField] int maxNumOfAdsPerDay = 5;
-    [SerializeField] int startingCoinsAmount = 5;
+
 
 
     public bool TryGetAds(bool onlyCheck  , out TimeSpan timeRemaining)
@@ -83,7 +81,7 @@ public class DataManager : MonoBehaviour
         }
         else
         {
-            if (adsData.NumOfClicks < maxNumOfAdsPerDay)
+            if (adsData.NumOfClicks < GameManager.Instance.MaxNumOfAdsPerDay)
             {
                 if (!onlyCheck)
                 {
@@ -131,18 +129,18 @@ public class DataManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        BaseEvents.OnAdsRewardCoin += OnAdsRewardCoinsHandler;
+        BaseEvents.OnAddCoins += OnAddCoinsHandler;
     }
     private void OnDisable()
     {
-        BaseEvents.OnAdsRewardCoin -= OnAdsRewardCoinsHandler;
+        BaseEvents.OnAddCoins -= OnAddCoinsHandler;
     }
     private void Start()
     {
         BaseEvents.CallCoinsAmountUpdate(NumOfCoins);
     }
-    private void OnAdsRewardCoinsHandler(int toAdd)
+    private void OnAddCoinsHandler(int toAdd)
     {
-        NumOfCoins += toAdd;
+        NumOfCoins = Mathf.Clamp(NumOfCoins + toAdd , 0 , GameManager.Instance.MaxCoinsAmount);
     }
 }

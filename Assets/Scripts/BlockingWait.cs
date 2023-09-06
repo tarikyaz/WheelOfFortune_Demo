@@ -29,7 +29,7 @@ public class BlockingWait : MonoBehaviour
     {
         if (adsIsRewarded)
         {
-            BaseEvents.CallRewardCoin(1);
+            BaseEvents.CallAddCoins(1);
         }
         RestAnimatin();
         finishedPopup.SetActive(false);

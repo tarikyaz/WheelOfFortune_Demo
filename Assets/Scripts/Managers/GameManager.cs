@@ -10,25 +10,34 @@ public class GameManager : Singleton<GameManager>
 
     public DataManager DataManager;
     public MainMenu MainMenu;
-    public WheelPiece WheelPiece;
+    public PickerWheel WheelPiece;
     public int MaxCoinsAmount = 10;
+    public int MaxNumOfAdsPerDay = 5;
+    public int StartingCoinsAmount = 5;
     private void OnEnable()
     {
         BaseEvents.OnGetExtraCoin += OnGetExtraCoinsHandler;
         BaseEvents.OnClaimFreeCoin += OnClaimFreeCoinHandler;
+        BaseEvents.OnSpendOneCoin += OnSpendOneCoinHandler;
+
     }
     private void OnDisable()
     {
         BaseEvents.OnGetExtraCoin -= OnGetExtraCoinsHandler;
         BaseEvents.OnClaimFreeCoin -= OnClaimFreeCoinHandler;
+        BaseEvents.OnSpendOneCoin -= OnSpendOneCoinHandler;
+    }
 
+    private void OnSpendOneCoinHandler()
+    {
+        BaseEvents.CallAddCoins(-1);
     }
 
     private void OnClaimFreeCoinHandler()
     {
         if (DataManager.TryGetDailyBonus())
         {
-            BaseEvents.CallRewardCoin(1);
+            BaseEvents.CallAddCoins(1);
         }
     }
 
