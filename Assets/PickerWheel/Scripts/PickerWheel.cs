@@ -2,6 +2,7 @@
 using DG.Tweening ;
 using UnityEngine.Events ;
 using TMPro;
+using System;
 
 public class PickerWheel : MonoBehaviour
 {
@@ -31,9 +32,8 @@ public class PickerWheel : MonoBehaviour
     [Space]
     private WheelPiece[] wheelPieces;
     [SerializeField] int MaxNumber = 8;
-    // Events
-    private UnityAction onSpinStartEvent;
-    private UnityAction<WheelPiece> onSpinEndEvent;
+
+
 
 
     private bool _isSpinning = false;
@@ -103,13 +103,12 @@ public class PickerWheel : MonoBehaviour
     }
 
 
-    public void Spin(int index = -1)
+    public void Spin(int index  , Action onFinish )
     {
         if (!_isSpinning)
         {
             _isSpinning = true;
 
-            onSpinStartEvent?.Invoke();
             if (index < 0)
             {
                 index = GetRandomPieceIndex();
@@ -120,12 +119,11 @@ public class PickerWheel : MonoBehaviour
 
 
             float angle = -(pieceAngle * index);
-
             float rightOffset = (angle - halfPieceAngleWithPaddings) % 360;
             float leftOffset = (angle + halfPieceAngleWithPaddings) % 360;
 
-            float randomAngle = Random.Range(leftOffset, rightOffset);
-
+            float randomAngle = UnityEngine.Random.Range(leftOffset, rightOffset);
+            
             Vector3 targetRotation = Vector3.back * (randomAngle + 2 * 360 * spinDuration);
 
             float prevAngle, currentAngle;
@@ -134,7 +132,7 @@ public class PickerWheel : MonoBehaviour
             bool isIndicatorOnTheLine = false;
 
             wheelCircle
-            .DORotate(targetRotation, spinDuration, RotateMode.Fast)
+            .DORotate(targetRotation, spinDuration, RotateMode.FastBeyond360)
             .SetEase(Ease.InOutQuart)
             .OnUpdate(() =>
             {
@@ -153,30 +151,16 @@ public class PickerWheel : MonoBehaviour
             .OnComplete(() =>
             {
                 _isSpinning = false;
-                onSpinEndEvent?.Invoke(piece);
-
-                onSpinStartEvent = null;
-                onSpinEndEvent = null;
+                onFinish?.Invoke();
             });
 
         }
     }
 
 
-    public void OnSpinStart(UnityAction action)
-    {
-        onSpinStartEvent = action;
-    }
-
-    public void OnSpinEnd(UnityAction<WheelPiece> action)
-    {
-        onSpinEndEvent = action;
-    }
-
-
     private int GetRandomPieceIndex()
     {
-        return Random.Range(0, wheelPieces.Length);
+        return UnityEngine.Random.Range(0, wheelPieces.Length);
     }
 
 
