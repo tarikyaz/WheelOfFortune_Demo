@@ -1,8 +1,7 @@
-﻿using UnityEngine ;
-using DG.Tweening ;
-using UnityEngine.Events ;
-using TMPro;
+﻿using DG.Tweening;
 using System;
+using TMPro;
+using UnityEngine;
 
 public class PickerWheel : MonoBehaviour
 {
@@ -88,7 +87,7 @@ public class PickerWheel : MonoBehaviour
     {
         Transform pieceTrns = InstantiatePiece().transform.GetChild(0);
 
-        pieceTrns.GetChild(0).GetComponent<TMP_Text>().text = (index+1).ToString();
+        pieceTrns.GetChild(0).GetComponent<TMP_Text>().text = (index + 1).ToString();
 
         //Line
         Transform lineTrns = Instantiate(linePrefab, linesParent.position, Quaternion.identity, linesParent).transform;
@@ -103,7 +102,7 @@ public class PickerWheel : MonoBehaviour
     }
 
 
-    public void Spin(int index  , Action onFinish )
+    public void Spin(int index, Action onFinish)
     {
         if (!_isSpinning)
         {
@@ -123,7 +122,7 @@ public class PickerWheel : MonoBehaviour
             float leftOffset = (angle + halfPieceAngleWithPaddings) % 360;
 
             float randomAngle = UnityEngine.Random.Range(leftOffset, rightOffset);
-            
+
             Vector3 targetRotation = Vector3.back * (randomAngle + 2 * 360 * spinDuration);
 
             float prevAngle, currentAngle;

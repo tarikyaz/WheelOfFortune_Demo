@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +17,8 @@ public class BlockingWait : MonoBehaviour
     {
         RestAnimatin();
         Debug.Log("BlockingWait:OnEnable");
-        sliderAnimTween = sliderRef.DOValue(1, adsDuration).From(0).OnComplete(()=> {
+        sliderAnimTween = sliderRef.DOValue(1, adsDuration).From(0).OnComplete(() =>
+        {
             sliderRef.value = 1;
             finishedPopup.gameObject.SetActive(true);
         });

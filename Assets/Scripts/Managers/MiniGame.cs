@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -63,7 +61,7 @@ public class Minigame : MonoBehaviour
         });
     }
 
-    private void GetResult(ref int btnIndex , out bool isWin)
+    private void GetResult(ref int btnIndex, out bool isWin)
     {
         timesSpining++;
         Debug.Log("timesSpining " + timesSpining);

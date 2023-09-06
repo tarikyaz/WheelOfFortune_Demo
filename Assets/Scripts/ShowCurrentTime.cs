@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using System.Globalization;
+using UnityEngine;
 
 public class ShowCurrentTime : MonoBehaviour
 {

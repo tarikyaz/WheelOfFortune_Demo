@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -11,9 +7,7 @@ public class GameManager : Singleton<GameManager>
     public CoinsManager CoinsManager;
     public MainMenu MainMenu;
     public Minigame Minigame;
-    public int MaxCoinsAmount = 10;
-    public int MaxNumOfAdsPerDay = 5;
-    public int StartingCoinsAmount = 5;
+
     private void OnEnable()
     {
         BaseEvents.OnGetExtraCoin += OnGetExtraCoinsHandler;
@@ -48,7 +42,7 @@ public class GameManager : Singleton<GameManager>
 
     private void FixedUpdate()
     {
-        if (MaxCoinsAmount == CoinsManager.NumOfCoins)
+        if (CoinsManager.MaxCoinsAmount == CoinsManager.NumOfCoins)
         {
             MainMenu.GetExtraCoins_Button.interactable = false;
             MainMenu.GetDailyBonus_Button.interactable = false;

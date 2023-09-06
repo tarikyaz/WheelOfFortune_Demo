@@ -1,10 +1,19 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinsManager : MonoBehaviour
 {
+    public int MaxCoinsAmount = 10;
+    public int NumOfCoins
+    {
+        get => PlayerPrefs.GetInt(NUMBER_OF_COINS_KEY_Str, startingCoinsAmount);
+        private set
+        {
+            PlayerPrefs.SetInt(NUMBER_OF_COINS_KEY_Str, value);
+            BaseEvents.CallCoinsAmountUpdate(value);
+        }
+    }
+
     [Serializable]
     public struct DatesDataStruc
     {
@@ -48,24 +57,17 @@ public class CoinsManager : MonoBehaviour
             }
         }
     }
-    const string DATES_DATA_KEY_Str = "DATESDATA";
-    const string NUMBER_OF_COINS_KEY_Str = "NUMBEROFCOINS";
-    public int NumOfCoins
-    {
-        get => PlayerPrefs.GetInt(NUMBER_OF_COINS_KEY_Str,GameManager.Instance.StartingCoinsAmount);
-        private set
-        {
-            PlayerPrefs.SetInt(NUMBER_OF_COINS_KEY_Str, value);
-            BaseEvents.CallCoinsAmountUpdate(value);
-        }
-    }
 
+
+    [SerializeField] int maxNumOfAdsPerDay = 5;
+    [SerializeField] int startingCoinsAmount = 5;
 
     DatesDataStruc adsData => JsonUtility.FromJson<DatesDataStruc>(PlayerPrefs.GetString(DATES_DATA_KEY_Str, DatesDataStruc.DefaultValueStr));
 
+    const string DATES_DATA_KEY_Str = "DATESDATA";
+    const string NUMBER_OF_COINS_KEY_Str = "NUMBEROFCOINS";
 
-
-    public bool TryGetAds(bool onlyCheck  , out TimeSpan timeRemaining)
+    public bool TryGetAds(bool onlyCheck, out TimeSpan timeRemaining)
     {
         DateTime currentTime = TimerUtility.CurrentTime;
         DateTime restTime = TimerUtility.GetRestTime(TimerUtility.ConvertTimestampToDateTime(adsData.FirstClickedAdsTime_Timestamp));
@@ -81,7 +83,7 @@ public class CoinsManager : MonoBehaviour
         }
         else
         {
-            if (adsData.NumOfClicks < GameManager.Instance.MaxNumOfAdsPerDay)
+            if (adsData.NumOfClicks < maxNumOfAdsPerDay)
             {
                 if (!onlyCheck)
                 {
@@ -104,7 +106,7 @@ public class CoinsManager : MonoBehaviour
     }
 
 
-    public bool TryGetDailyBonus(bool onlyCheck , out TimeSpan timeRemaining)
+    public bool TryGetDailyBonus(bool onlyCheck, out TimeSpan timeRemaining)
     {
         DateTime currentTime = TimerUtility.CurrentTime;
         DateTime claimTime = TimerUtility.ConvertTimestampToDateTime(adsData.DailyBonusClaimDate_Timestamp);
@@ -141,6 +143,6 @@ public class CoinsManager : MonoBehaviour
     }
     private void OnAddCoinsHandler(int toAdd)
     {
-        NumOfCoins = Mathf.Clamp(NumOfCoins + toAdd , 0 , GameManager.Instance.MaxCoinsAmount);
+        NumOfCoins = Mathf.Clamp(NumOfCoins + toAdd, 0, MaxCoinsAmount);
     }
 }

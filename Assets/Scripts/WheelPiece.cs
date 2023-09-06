@@ -3,6 +3,6 @@
 [Serializable]
 public class WheelPiece
 {
-     public int Index;
+    public int Index;
 }
 

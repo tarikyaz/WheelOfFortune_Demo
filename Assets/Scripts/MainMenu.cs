@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +9,7 @@ public class MainMenu : MonoBehaviour
     public Button GetExtraCoins_Button;
     public Button GetDailyBonus_Button;
     public Button PlayMiniGame_Button;
-    
+
     public TMP_Text GetExtraCoins_Text;
     public TMP_Text GetDailyBonus_Text;
 
