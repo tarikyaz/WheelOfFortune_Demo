@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Minigame : MonoBehaviour
 {
-    [SerializeField] Button[] buttonsArray = new Button[8];
+    [SerializeField] Button[] buttonsArray = new Button[0];
     [SerializeField] TMP_InputField bet_Input;
     const string TIMES_SPINING_KEY_Str = "TIMESSPINING";
     int timesSpining

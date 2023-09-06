@@ -128,17 +128,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1187614945292141781, guid: 3f8b4b6baff93814db0584615b6819ca, type: 3}
   m_PrefabInstance: {fileID: 1187614945403280742}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &111172020 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1187614945292141778, guid: 3f8b4b6baff93814db0584615b6819ca, type: 3}
-  m_PrefabInstance: {fileID: 1187614945403280742}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490ce68b06ee08342a963b1289ea4da8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &204157262
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce674fd5ba3789a4d9d1f235c4ecf855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxCoinsAmount: 10
+  maxNumOfAdsPerDay: 5
+  startingCoinsAmount: 5
 --- !u!1 &344129558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,10 +1246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CoinsManager: {fileID: 260456001}
   MainMenu: {fileID: 828162045}
-  Minigame: {fileID: 111172020}
-  MaxCoinsAmount: 10
-  MaxNumOfAdsPerDay: 5
-  StartingCoinsAmount: 5
+  Minigame: {fileID: 1187614945403280743}
 --- !u!4 &1114496347
 Transform:
   m_ObjectHideFlags: 0
@@ -2452,8 +2441,20 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1187614945292141778, guid: 3f8b4b6baff93814db0584615b6819ca, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3f8b4b6baff93814db0584615b6819ca, type: 3}
+--- !u!114 &1187614945403280743 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7232602723995073496, guid: 3f8b4b6baff93814db0584615b6819ca, type: 3}
+  m_PrefabInstance: {fileID: 1187614945403280742}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a00464a9ef8aff948be5c92c00d5c31e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2300478256346646047
 PrefabInstance:
   m_ObjectHideFlags: 0

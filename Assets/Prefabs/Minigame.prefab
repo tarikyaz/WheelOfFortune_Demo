@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50.1
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 26.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 65
+  m_fontSize: 22.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -627,7 +627,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 34.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1443,7 +1443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1187614945292141781}
-  - component: {fileID: 1187614945292141778}
+  - component: {fileID: 7232602723995073496}
   m_Layer: 5
   m_Name: Minigame
   m_TagString: Untagged
@@ -1478,7 +1478,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1187614945292141778
+--- !u!114 &7232602723995073496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1487,18 +1487,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1187614945292141780}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490ce68b06ee08342a963b1289ea4da8, type: 3}
+  m_Script: {fileID: 11500000, guid: a00464a9ef8aff948be5c92c00d5c31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonsArray:
-  - {fileID: 1187614946536388601}
-  - {fileID: 1187614946200606498}
-  - {fileID: 1187614946529380949}
-  - {fileID: 1187614944880588085}
-  - {fileID: 1187614945482132089}
-  - {fileID: 1187614945571996273}
-  - {fileID: 1187614944836678841}
-  - {fileID: 1187614944825837764}
+  buttonsArray: []
   bet_Input: {fileID: 1187614945552360532}
   pickerWheel: {fileID: 1291700483891811750}
 --- !u!1 &1187614945426465498
@@ -1913,7 +1905,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1187614945292141778}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MiniGame, Assembly-CSharp
         m_MethodName: OnBetChange
         m_Mode: 0
