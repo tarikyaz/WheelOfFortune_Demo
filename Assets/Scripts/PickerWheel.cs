@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PickerWheel : MonoBehaviour
 {
-
+    // References to various game objects and components
     [Header("References :")]
     [SerializeField] private GameObject linePrefab;
     [SerializeField] private Transform linesParent;
@@ -20,48 +20,45 @@ public class PickerWheel : MonoBehaviour
     [Header("Sounds :")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip tickAudioClip;
-    [SerializeField][Range(0f, 1f)] private float volume = .5f;
-    [SerializeField][Range(-3f, 3f)] private float pitch = 1f;
+    [SerializeField, Range(0f, 1f)] private float volume = 0.5f;
+    [SerializeField, Range(-3f, 3f)] private float pitch = 1f;
 
     [Space]
     [Header("Picker wheel settings :")]
     [Range(1, 20)] public int spinDuration = 8;
-    [SerializeField][Range(.2f, 2f)] private float wheelSize = 1f;
+    [SerializeField, Range(0.2f, 2f)] private float wheelSize = 1f;
 
     [Space]
     private WheelPiece[] wheelPieces;
     [SerializeField] int MaxNumber = 8;
 
-
-
-
     private bool _isSpinning = false;
 
     public bool IsSpinning { get { return _isSpinning; } }
-
 
     private Vector2 pieceMinSize = new Vector2(81f, 146f);
     private Vector2 pieceMaxSize = new Vector2(144f, 213f);
     private int piecesMin = 2;
     private int piecesMax = 12;
-
     private float pieceAngle;
     private float halfPieceAngle;
     private float halfPieceAngleWithPaddings;
+
     private void Start()
     {
+        // Initialize the picker wheel and set up audio
         wheelPieces = new WheelPiece[MaxNumber];
-        pieceAngle = 360 / wheelPieces.Length;
+        pieceAngle = 360f / wheelPieces.Length;
         halfPieceAngle = pieceAngle / 2f;
         halfPieceAngleWithPaddings = halfPieceAngle - (halfPieceAngle / 4f);
 
         Generate();
         SetupAudio();
-
     }
 
     private void SetupAudio()
     {
+        // Configure audio settings for the wheel spinning sound
         audioSource.clip = tickAudioClip;
         audioSource.volume = volume;
         audioSource.pitch = pitch;
@@ -69,6 +66,7 @@ public class PickerWheel : MonoBehaviour
 
     private void Generate()
     {
+        // Generate the wheel pieces and lines
         wheelPiecePrefab = InstantiatePiece();
 
         RectTransform rt = wheelPiecePrefab.transform.GetChild(0).GetComponent<RectTransform>();
@@ -85,11 +83,12 @@ public class PickerWheel : MonoBehaviour
 
     private void DrawPiece(int index)
     {
+        // Draw a piece on the wheel
         Transform pieceTrns = InstantiatePiece().transform.GetChild(0);
 
         pieceTrns.GetChild(0).GetComponent<TMP_Text>().text = (index + 1).ToString();
 
-        //Line
+        // Line
         Transform lineTrns = Instantiate(linePrefab, linesParent.position, Quaternion.identity, linesParent).transform;
         lineTrns.RotateAround(wheelPiecesParent.position, Vector3.back, (pieceAngle * index) + halfPieceAngle);
 
@@ -98,9 +97,9 @@ public class PickerWheel : MonoBehaviour
 
     private GameObject InstantiatePiece()
     {
+        // Instantiate a new wheel piece
         return Instantiate(wheelPiecePrefab, wheelPiecesParent.position, Quaternion.identity, wheelPiecesParent);
     }
-
 
     public void Spin(int index, Action onFinish)
     {
@@ -112,11 +111,11 @@ public class PickerWheel : MonoBehaviour
             {
                 index = GetRandomPieceIndex();
             }
-            Debug.Log("Spint to number" + (index + 1));
+            Debug.Log("Spinning to number " + (index + 1));
 
             WheelPiece piece = wheelPieces[index];
 
-
+            // Calculate the rotation angle and spin the wheel
             float angle = -(pieceAngle * index);
             float rightOffset = (angle - halfPieceAngleWithPaddings) % 360;
             float leftOffset = (angle + halfPieceAngleWithPaddings) % 360;
@@ -130,41 +129,37 @@ public class PickerWheel : MonoBehaviour
 
             bool isIndicatorOnTheLine = false;
 
+            // Rotate the wheel to the target angle with audio feedback
             wheelCircle
-            .DORotate(targetRotation, spinDuration, RotateMode.FastBeyond360)
-            .SetEase(Ease.InOutQuart)
-            .OnUpdate(() =>
-            {
-                float diff = Mathf.Abs(prevAngle - currentAngle);
-                if (diff >= halfPieceAngle)
+                .DORotate(targetRotation, spinDuration, RotateMode.FastBeyond360)
+                .SetEase(Ease.InOutQuart)
+                .OnUpdate(() =>
                 {
-                    if (isIndicatorOnTheLine)
+                    float diff = Mathf.Abs(prevAngle - currentAngle);
+                    if (diff >= halfPieceAngle)
                     {
-                        audioSource.PlayOneShot(audioSource.clip);
+                        if (isIndicatorOnTheLine)
+                        {
+                            audioSource.PlayOneShot(audioSource.clip);
+                        }
+                        prevAngle = currentAngle;
+                        isIndicatorOnTheLine = !isIndicatorOnTheLine;
                     }
-                    prevAngle = currentAngle;
-                    isIndicatorOnTheLine = !isIndicatorOnTheLine;
-                }
-                currentAngle = wheelCircle.eulerAngles.z;
-            })
-            .OnComplete(() =>
-            {
-                _isSpinning = false;
-                onFinish?.Invoke();
-            });
-
+                    currentAngle = wheelCircle.eulerAngles.z;
+                })
+                .OnComplete(() =>
+                {
+                    _isSpinning = false;
+                    onFinish?.Invoke();
+                });
         }
     }
 
-
     private int GetRandomPieceIndex()
     {
+        // Get a random index for the wheel piece
         return UnityEngine.Random.Range(0, wheelPieces.Length);
     }
-
-
-
-
 
     private void OnValidate()
     {
@@ -172,6 +167,6 @@ public class PickerWheel : MonoBehaviour
             PickerWheelTransform.localScale = new Vector3(wheelSize, wheelSize, 1f);
 
         if (MaxNumber > piecesMax || MaxNumber < piecesMin)
-            Debug.LogError("[ PickerWheelwheel ]  pieces length must be between " + piecesMin + " and " + piecesMax);
+            Debug.LogError("[ PickerWheel ] Pieces length must be between " + piecesMin + " and " + piecesMax);
     }
 }

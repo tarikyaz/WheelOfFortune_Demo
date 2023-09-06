@@ -7,17 +7,18 @@ public class Minigame : MonoBehaviour
 {
     [SerializeField] Button[] buttonsArray = new Button[0];
     [SerializeField] TMP_InputField bet_Input;
-    const string TIMES_SPINING_KEY_Str = "TIMESSPINING";
-    int timesSpining
+    const string TIMES_SPINNING_KEY_Str = "TIMESSPINING";
+    int timesSpinning
     {
-        get => PlayerPrefs.GetInt(TIMES_SPINING_KEY_Str, 0);
-        set => PlayerPrefs.SetInt(TIMES_SPINING_KEY_Str, value);
+        get => PlayerPrefs.GetInt(TIMES_SPINNING_KEY_Str, 0);
+        set => PlayerPrefs.SetInt(TIMES_SPINNING_KEY_Str, value);
     }
     [SerializeField] PickerWheel pickerWheel;
     int currentBet = -1;
 
     private void Start()
     {
+        // Set button actions
         for (int i = 0; i < buttonsArray.Length; i++)
         {
             int index = i;
@@ -25,6 +26,8 @@ public class Minigame : MonoBehaviour
             button.onClick.AddListener(() => ButtonClicked(index));
             button.interactable = false;
         }
+
+        // Set bet input listener so the UI changes depending on the bet value if it's suitable to make a spin or not
         bet_Input.onValueChanged.AddListener((value) => {
             OnBetChange(value);
         });
@@ -32,9 +35,9 @@ public class Minigame : MonoBehaviour
     private void OnEnable()
     {
         BaseEvents.OnCoinsAmountUpdate += OnCoinsUpdateAmountHandler;
+
+        // Refreshing bet input 
         bet_Input.text = "";
-
-
     }
     private void OnDisable()
     {
@@ -43,6 +46,7 @@ public class Minigame : MonoBehaviour
 
     private void OnCoinsUpdateAmountHandler(int newValue)
     {
+        // Checking if the bet value is suitable for spinning
         for (int i = 0; i < buttonsArray.Length; i++)
         {
             Button button = buttonsArray[i];
@@ -52,23 +56,39 @@ public class Minigame : MonoBehaviour
 
     void ButtonClicked(int btnIndex)
     {
+        // Changing the spinning target depending on the win logic 
         GetResult(ref btnIndex, out var isWin);
         for (int i = 0; i < buttonsArray.Length; i++)
         {
             Button button = buttonsArray[i];
             button.interactable = false;
         }
+
+        // Call spin for the wheel
         pickerWheel.Spin(btnIndex, () =>
         {
+            // After finishing spinning, show the result
             BaseEvents.CallAddCoins(isWin ? currentBet * 2 : -currentBet);
         });
     }
 
     private void GetResult(ref int btnIndex, out bool isWin)
     {
-        timesSpining++;
-        Debug.Log("timesSpining " + timesSpining);
-        switch (timesSpining)
+        timesSpinning++;
+        Debug.Log("timesSpinning " + timesSpinning);
+
+        /* Winning logic:
+         * 
+            -	1st "spin", user loses
+            -	2nd "spin", user wins
+            -	3rd-6th "spin", user loses
+            -	7th, 8th "spin", user wins
+            -	9th time user loses
+            -	After the 10th "spin", user has a 5% chance of winning
+
+         */
+
+        switch (timesSpinning)
         {
             case 1:
                 isWin = false;
@@ -92,20 +112,22 @@ public class Minigame : MonoBehaviour
         Debug.Log("is win " + isWin);
         if (!isWin)
         {
-            List<int> newVlaues = new List<int>();
+            // If there is no win, let it spin to a random value but not the one the player's bet
+            List<int> newValues = new List<int>();
             for (int i = 0; i < buttonsArray.Length - 1; i++)
             {
                 if (i != btnIndex)
                 {
-                    newVlaues.Add(i);
+                    newValues.Add(i);
                 }
             }
-            btnIndex = newVlaues[UnityEngine.Random.Range(0, newVlaues.Count)];
+            btnIndex = newValues[UnityEngine.Random.Range(0, newValues.Count)];
         }
     }
 
-     void OnBetChange(string value)
+    void OnBetChange(string value)
     {
+        // If it's an int value, then check if the player can cover the loss
         if (int.TryParse(value, out int valueInt))
         {
             currentBet = valueInt;

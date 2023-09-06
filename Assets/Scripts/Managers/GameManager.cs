@@ -55,6 +55,7 @@ public class GameManager : Singleton<GameManager>
 
     private void FixedUpdate()
     {
+        // checking if the wallet it full or not
         if (coinsManager.MaxCoinsAmount == coinsManager.NumOfCoins)
         {
             mainMenu.GetExtraCoins_Button.interactable = false;
@@ -64,6 +65,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
+            // checking if still can get coins or showing remaining time
             mainMenu.GetExtraCoins_Button.interactable = coinsManager.TryGetAds(true, out var timeRemaingForExtraCoins);
             mainMenu.GetDailyBonus_Button.interactable = coinsManager.TryGetDailyBonus(true, out var timeRemaingForDailyBonus);
 
