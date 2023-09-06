@@ -114,7 +114,7 @@ public class PickerWheel : MonoBehaviour
             {
                 index = GetRandomPieceIndex();
             }
-            Debug.Log("Spint " + (index + 1));
+            Debug.Log("Spint to number" + (index + 1));
 
             WheelPiece piece = wheelPieces[index];
 

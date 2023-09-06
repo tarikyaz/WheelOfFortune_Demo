@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour
+public class CoinsManager : MonoBehaviour
 {
     [Serializable]
     public struct DatesDataStruc

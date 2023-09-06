@@ -8,9 +8,9 @@ public class GameManager : Singleton<GameManager>
 {
     protected override bool isDontDestroyOnload => true;
 
-    public DataManager DataManager;
+    public CoinsManager CoinsManager;
     public MainMenu MainMenu;
-    public PickerWheel WheelPiece;
+    public Minigame Minigame;
     public int MaxCoinsAmount = 10;
     public int MaxNumOfAdsPerDay = 5;
     public int StartingCoinsAmount = 5;
@@ -32,10 +32,14 @@ public class GameManager : Singleton<GameManager>
     {
         BaseEvents.CallAddCoins(-1);
     }
-
+    private void Start()
+    {
+        MainMenu.gameObject.SetActive(true);
+        Minigame.gameObject.SetActive(false);
+    }
     private void OnClaimFreeCoinHandler()
     {
-        if (DataManager.TryGetDailyBonus())
+        if (CoinsManager.TryGetDailyBonus())
         {
             BaseEvents.CallAddCoins(1);
         }
@@ -44,15 +48,15 @@ public class GameManager : Singleton<GameManager>
 
     private void FixedUpdate()
     {
-        if (MaxCoinsAmount == DataManager.NumOfCoins)
+        if (MaxCoinsAmount == CoinsManager.NumOfCoins)
         {
             MainMenu.GetExtraCoins_Button.interactable = false;
             MainMenu.GetDailyBonus_Button.interactable = false;
         }
         else
         {
-            MainMenu.GetExtraCoins_Button.interactable = DataManager.TryGetAds(true, out var timeRemaingForExtraCoins);
-            MainMenu.GetDailyBonus_Button.interactable = DataManager.TryGetDailyBonus(true, out var timeRemaingForDailyBonus);
+            MainMenu.GetExtraCoins_Button.interactable = CoinsManager.TryGetAds(true, out var timeRemaingForExtraCoins);
+            MainMenu.GetDailyBonus_Button.interactable = CoinsManager.TryGetDailyBonus(true, out var timeRemaingForDailyBonus);
 
             if (MainMenu.GetExtraCoins_Button.interactable)
             {
@@ -75,10 +79,10 @@ public class GameManager : Singleton<GameManager>
     }
     private void OnGetExtraCoinsHandler()
     {
-        if (DataManager.TryGetAds())
+        if (CoinsManager.TryGetAds())
         {
             MainMenu.ShowAds();
         }
-        MainMenu.GetExtraCoins_Button.interactable = DataManager.TryGetAds(true);
+        MainMenu.GetExtraCoins_Button.interactable = CoinsManager.TryGetAds(true);
     }
 }

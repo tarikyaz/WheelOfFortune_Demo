@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,6 +11,7 @@ public class MainMenu : MonoBehaviour
     BlockingWait blockingWaitPopup;
     public Button GetExtraCoins_Button;
     public Button GetDailyBonus_Button;
+    public Button PlayMiniGame_Button;
     
     public TMP_Text GetExtraCoins_Text;
     public TMP_Text GetDailyBonus_Text;
@@ -35,6 +37,28 @@ public class MainMenu : MonoBehaviour
         BaseEvents.CallOnClaimFreeCoin();
 
     }
+
+    // Minigame
+    public void Action_StartMinigame(bool on)
+    {
+        Debug.Log($"MainMenu:Action_StartMinigame {(on ? "on" : "off")}");
+        GameManager.Instance.Minigame.gameObject.SetActive(on);
+        GameManager.Instance.MainMenu.gameObject.SetActive(!on);
+    }
+    private void OnEnable()
+    {
+        BaseEvents.OnCoinsAmountUpdate += OnCoinsAmountUpdateHandler;
+    }
+    private void OnDisable()
+    {
+        BaseEvents.OnCoinsAmountUpdate -= OnCoinsAmountUpdateHandler;
+    }
+
+    private void OnCoinsAmountUpdateHandler(int newAmouont)
+    {
+        PlayMiniGame_Button.interactable = newAmouont > 0;
+    }
+
     public void ShowAds()
     {
         blockingWaitPopup.gameObject.SetActive(true);
