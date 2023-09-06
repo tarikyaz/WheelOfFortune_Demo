@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class CoinsManager : MonoBehaviour
 {
-    // The maximum number of coins a player can have
-    public int MaxCoinsAmount = 10;
-
     // The current number of coins the player has
     public int NumOfCoins
     {
@@ -186,7 +183,7 @@ public class CoinsManager : MonoBehaviour
 
     private void OnAddCoinsHandler(int toAdd)
     {
-        // Add coins to the player's balance and ensure it stays within the maximum limit
-        NumOfCoins = Mathf.Clamp(NumOfCoins + toAdd, 0, MaxCoinsAmount);
+        // Add coins to the player's balance
+        NumOfCoins += toAdd;
     }
 }
