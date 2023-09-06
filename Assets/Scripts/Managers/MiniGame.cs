@@ -52,6 +52,11 @@ public class Minigame : MonoBehaviour
     void ButtonClicked(int btnIndex)
     {
         GetResult(ref btnIndex, out var isWin);
+        for (int i = 0; i < buttonsArray.Length; i++)
+        {
+            Button button = buttonsArray[i];
+            button.interactable = false;
+        }
         pickerWheel.Spin(btnIndex, () =>
         {
             BaseEvents.CallAddCoins(isWin ? currentBet * 2 : -currentBet);
