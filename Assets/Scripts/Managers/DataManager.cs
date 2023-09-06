@@ -48,11 +48,11 @@ public class DataManager : MonoBehaviour
             }
         }
     }
-    static string DATES_DATA_KEY_Str => "DATESDATA";
-    static  string NUMBER_OF_COINS_KEY_Str => "NUMBEROFCOINS";
-    public static int NumOfCoins
+    const string DATES_DATA_KEY_Str = "DATESDATA";
+    const string NUMBER_OF_COINS_KEY_Str = "NUMBEROFCOINS";
+    public int NumOfCoins
     {
-        get => PlayerPrefs.GetInt(NUMBER_OF_COINS_KEY_Str, 0);
+        get => PlayerPrefs.GetInt(NUMBER_OF_COINS_KEY_Str, startingCoinsAmount);
         private set
         {
             value = Mathf.Clamp(value, 0, GameManager.Instance.MaxCoinsAmount);
@@ -64,7 +64,7 @@ public class DataManager : MonoBehaviour
 
     DatesDataStruc adsData => JsonUtility.FromJson<DatesDataStruc>(PlayerPrefs.GetString(DATES_DATA_KEY_Str, DatesDataStruc.DefaultValueStr));
     [SerializeField] int maxNumOfAdsPerDay = 5;
-
+    [SerializeField] int startingCoinsAmount = 5;
 
 
     public bool TryGetAds(bool onlyCheck  , out TimeSpan timeRemaining)
