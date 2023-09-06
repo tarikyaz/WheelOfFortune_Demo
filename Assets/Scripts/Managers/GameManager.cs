@@ -52,6 +52,8 @@ public class GameManager : Singleton<GameManager>
         {
             MainMenu.GetExtraCoins_Button.interactable = false;
             MainMenu.GetDailyBonus_Button.interactable = false;
+            MainMenu.GetExtraCoins_Text.text = "Get extra coin\n(Wallet is full !)";
+            MainMenu.GetDailyBonus_Text.text = "Claim free coin\n(Wallet is full !)";
         }
         else
         {
