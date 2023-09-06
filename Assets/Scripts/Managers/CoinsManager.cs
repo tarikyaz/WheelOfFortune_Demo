@@ -9,6 +9,10 @@ public class CoinsManager : MonoBehaviour
         get => PlayerPrefs.GetInt(NUMBER_OF_COINS_KEY_Str, startingCoinsAmount);
         private set
         {
+            if (value <= 0)
+            {
+                value = 0;
+            }
             PlayerPrefs.SetInt(NUMBER_OF_COINS_KEY_Str, value);
             BaseEvents.CallCoinsAmountUpdate(value);
         }
