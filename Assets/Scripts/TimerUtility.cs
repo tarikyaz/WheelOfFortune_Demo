@@ -8,7 +8,7 @@ public static class TimerUtility
     {
         get
         {
-            return DateTime.UtcNow.AddDays(1);
+            return DateTime.UtcNow;
         }
     }
 
