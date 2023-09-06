@@ -35,12 +35,11 @@ public class MainMenu : MonoBehaviour
 
     }
 
-    // Minigame
+    // minigame
     public void Action_StartMinigame(bool on)
     {
         Debug.Log($"MainMenu:Action_StartMinigame {(on ? "on" : "off")}");
-        GameManager.Instance.Minigame.gameObject.SetActive(on);
-        GameManager.Instance.MainMenu.gameObject.SetActive(!on);
+        BaseEvents.CallStartMinigame(on);
     }
     private void OnEnable()
     {

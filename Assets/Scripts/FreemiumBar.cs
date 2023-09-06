@@ -17,6 +17,6 @@ public class FreemiumBar : MonoBehaviour
 
     private void OnCoinsAmountUpdate(int newAmount)
     {
-        coins_Text.text = $"Coins: {newAmount}/{GameManager.Instance.CoinsManager.MaxCoinsAmount}";
+        coins_Text.text = $"Coins: {newAmount}/{GameManager.Instance.MaxCoinsAmount}";
     }
 }

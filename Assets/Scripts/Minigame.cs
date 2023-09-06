@@ -25,6 +25,9 @@ public class Minigame : MonoBehaviour
             button.onClick.AddListener(() => ButtonClicked(index));
             button.interactable = false;
         }
+        bet_Input.onValueChanged.AddListener((value) => {
+            OnBetChange(value);
+        });
     }
     private void OnEnable()
     {
@@ -101,7 +104,7 @@ public class Minigame : MonoBehaviour
         }
     }
 
-    public void OnBetChange(string value)
+     void OnBetChange(string value)
     {
         if (int.TryParse(value, out int valueInt))
         {
@@ -113,7 +116,7 @@ public class Minigame : MonoBehaviour
         }
         for (int i = 0; i < buttonsArray.Length; i++)
         {
-            buttonsArray[i].interactable = currentBet > 0 && currentBet <= GameManager.Instance.CoinsManager.NumOfCoins;
+            buttonsArray[i].interactable = currentBet > 0 && currentBet <= GameManager.Instance.NumOfCoins;
         }
     }
 }

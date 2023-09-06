@@ -7,7 +7,7 @@ public static class BaseEvents
     internal static Action OnSpendOneCoin;
     internal static Action<int> OnAddCoins;
     internal static Action<int> OnCoinsAmountUpdate;
-
+    internal static Action<bool> OnStartMinigame;
     internal static void CallCoinsAmountUpdate(int newValue)
     {
         OnCoinsAmountUpdate?.Invoke(newValue);
@@ -31,5 +31,10 @@ public static class BaseEvents
     internal static void CallAddCoins(int amount)
     {
         OnAddCoins?.Invoke(amount);
+    }
+
+    internal static void CallStartMinigame(bool on)
+    {
+        OnStartMinigame?.Invoke(on);
     }
 }

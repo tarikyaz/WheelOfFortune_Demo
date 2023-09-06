@@ -1,18 +1,23 @@
+using System;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
     protected override bool isDontDestroyOnload => true;
 
-    public CoinsManager CoinsManager;
-    public MainMenu MainMenu;
-    public Minigame Minigame;
+    public int NumOfCoins => coinsManager.NumOfCoins;
+    public object MaxCoinsAmount => coinsManager.MaxCoinsAmount;
+
+    [SerializeField] CoinsManager coinsManager;
+    [SerializeField] MainMenu mainMenu;
+    [SerializeField] Minigame minigame;
 
     private void OnEnable()
     {
         BaseEvents.OnGetExtraCoin += OnGetExtraCoinsHandler;
         BaseEvents.OnClaimFreeCoin += OnClaimFreeCoinHandler;
         BaseEvents.OnSpendOneCoin += OnSpendOneCoinHandler;
+        BaseEvents.OnStartMinigame += OnStartMinigameHandler;
 
     }
     private void OnDisable()
@@ -20,6 +25,14 @@ public class GameManager : Singleton<GameManager>
         BaseEvents.OnGetExtraCoin -= OnGetExtraCoinsHandler;
         BaseEvents.OnClaimFreeCoin -= OnClaimFreeCoinHandler;
         BaseEvents.OnSpendOneCoin -= OnSpendOneCoinHandler;
+        BaseEvents.OnStartMinigame -= OnStartMinigameHandler;
+
+    }
+
+    private void OnStartMinigameHandler(bool on)
+    {
+        minigame.gameObject.SetActive(on);
+        mainMenu.gameObject.SetActive(!on);
     }
 
     private void OnSpendOneCoinHandler()
@@ -28,12 +41,12 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-        MainMenu.gameObject.SetActive(true);
-        Minigame.gameObject.SetActive(false);
+        mainMenu.gameObject.SetActive(true);
+        minigame.gameObject.SetActive(false);
     }
     private void OnClaimFreeCoinHandler()
     {
-        if (CoinsManager.TryGetDailyBonus())
+        if (coinsManager.TryGetDailyBonus())
         {
             BaseEvents.CallAddCoins(1);
         }
@@ -42,44 +55,44 @@ public class GameManager : Singleton<GameManager>
 
     private void FixedUpdate()
     {
-        if (CoinsManager.MaxCoinsAmount == CoinsManager.NumOfCoins)
+        if (coinsManager.MaxCoinsAmount == coinsManager.NumOfCoins)
         {
-            MainMenu.GetExtraCoins_Button.interactable = false;
-            MainMenu.GetDailyBonus_Button.interactable = false;
-            MainMenu.GetExtraCoins_Text.text = "Get extra coin\n(Wallet is full !)";
-            MainMenu.GetDailyBonus_Text.text = "Claim free coin\n(Wallet is full !)";
+            mainMenu.GetExtraCoins_Button.interactable = false;
+            mainMenu.GetDailyBonus_Button.interactable = false;
+            mainMenu.GetExtraCoins_Text.text = "Get extra coin\n(Wallet is full !)";
+            mainMenu.GetDailyBonus_Text.text = "Claim free coin\n(Wallet is full !)";
         }
         else
         {
-            MainMenu.GetExtraCoins_Button.interactable = CoinsManager.TryGetAds(true, out var timeRemaingForExtraCoins);
-            MainMenu.GetDailyBonus_Button.interactable = CoinsManager.TryGetDailyBonus(true, out var timeRemaingForDailyBonus);
+            mainMenu.GetExtraCoins_Button.interactable = coinsManager.TryGetAds(true, out var timeRemaingForExtraCoins);
+            mainMenu.GetDailyBonus_Button.interactable = coinsManager.TryGetDailyBonus(true, out var timeRemaingForDailyBonus);
 
-            if (MainMenu.GetExtraCoins_Button.interactable)
+            if (mainMenu.GetExtraCoins_Button.interactable)
             {
-                MainMenu.GetExtraCoins_Text.text = "Get extra coin";
+                mainMenu.GetExtraCoins_Text.text = "Get extra coin";
             }
             else
             {
-                MainMenu.GetExtraCoins_Text.text = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaingForExtraCoins.Hours, timeRemaingForExtraCoins.Minutes, timeRemaingForExtraCoins.Seconds);
+                mainMenu.GetExtraCoins_Text.text = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaingForExtraCoins.Hours, timeRemaingForExtraCoins.Minutes, timeRemaingForExtraCoins.Seconds);
             }
 
-            if (MainMenu.GetDailyBonus_Button.interactable)
+            if (mainMenu.GetDailyBonus_Button.interactable)
             {
-                MainMenu.GetDailyBonus_Text.text = "Claim free coin";
+                mainMenu.GetDailyBonus_Text.text = "Claim free coin";
             }
             else
             {
-                MainMenu.GetDailyBonus_Text.text = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaingForDailyBonus.Hours, timeRemaingForDailyBonus.Minutes, timeRemaingForDailyBonus.Seconds);
+                mainMenu.GetDailyBonus_Text.text = string.Format("{0:D2}:{1:D2}:{2:D2}", timeRemaingForDailyBonus.Hours, timeRemaingForDailyBonus.Minutes, timeRemaingForDailyBonus.Seconds);
             }
         }
     }
     private void OnGetExtraCoinsHandler()
     {
-        if (CoinsManager.TryGetAds())
+        if (coinsManager.TryGetAds())
         {
-            MainMenu.ShowAds();
+            mainMenu.ShowAds();
         }
-        MainMenu.GetExtraCoins_Button.interactable = CoinsManager.TryGetAds(true);
+        mainMenu.GetExtraCoins_Button.interactable = coinsManager.TryGetAds(true);
     }
     public void OpenLinkedin()
     {

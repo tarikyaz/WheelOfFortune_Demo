@@ -1244,9 +1244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e859beb5229c74fb92e2de5c35ea90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoinsManager: {fileID: 260456001}
-  MainMenu: {fileID: 828162045}
-  Minigame: {fileID: 1187614945403280743}
+  coinsManager: {fileID: 260456001}
+  mainMenu: {fileID: 828162045}
+  minigame: {fileID: 1187614945403280743}
 --- !u!4 &1114496347
 Transform:
   m_ObjectHideFlags: 0
