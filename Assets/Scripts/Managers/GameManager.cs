@@ -85,4 +85,8 @@ public class GameManager : Singleton<GameManager>
         }
         MainMenu.GetExtraCoins_Button.interactable = CoinsManager.TryGetAds(true);
     }
+    public void OpenLinkedin()
+    {
+        Application.OpenURL("https://www.linkedin.com/in/trk90/");
+    }
 }
