@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Minigame : MonoBehaviour
 {
     [SerializeField] Button[] buttonsArray = new Button[8];
+    [SerializeField] TMP_InputField bet_Input;
     const string TIMES_SPINING_KEY_Str = "TIMESSPINING";
     int timesSpining
     {
@@ -23,12 +25,15 @@ public class Minigame : MonoBehaviour
             int index = i;
             Button button = buttonsArray[index];
             button.onClick.AddListener(() => ButtonClicked(index));
-
+            button.interactable = false;
         }
     }
     private void OnEnable()
     {
         BaseEvents.OnCoinsAmountUpdate += OnCoinsUpdateAmountHandler;
+        bet_Input.text = "";
+
+
     }
     private void OnDisable()
     {
@@ -41,7 +46,6 @@ public class Minigame : MonoBehaviour
         {
             Button button = buttonsArray[i];
             button.interactable = currentBet > 0 && currentBet <= newValue;
-
         }
     }
 
